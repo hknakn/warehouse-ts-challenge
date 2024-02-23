@@ -2,7 +2,7 @@ export type Product = {
   id: string;
   productCode: string;
   name: string;
-  description?: string | null;
+  description: string | null;
   stock: number;
   unitPrice?: number;
 };
@@ -14,18 +14,14 @@ export type Order = {
 };
 
 export type Package = {
-  articles: Product[];
-  totalPrice: number;
+  id: string;
+  name: string;
+  quantity: number;
 };
 
 export type Invoice = {
+  id: string;
+  orderId: string;
   packages: Package[];
-  totalInvoicePrice: number;
-};
-
-export type Data = {
-  heatPumps: Product[];
-  installationMaterials: Product[];
-  tools: Product[];
-  orders: Order[];
+  price: number;
 };

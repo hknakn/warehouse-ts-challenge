@@ -1,19 +1,22 @@
-import getData from './services/getData';
-import { buildPackages, connectInvoice, produceRestockingList, throwWarnings } from './utils';
+import apiClient from './api/apiClient';
+import { createRestockingList } from './utils/createRestockingList';
+import { processAllOrders } from './utils/processOrders';
 
 // Main function to run the solution
-const runSolution = async () => {
-  const { orders, heatPumps, installationMaterials, tools } = await getData();
+const main = async () => {
+  // Fetching orders and products
+  await Promise.all([
+    apiClient.fetchOrders(),
+    apiClient.fetchProducts(),
+  ]);
 
-  const products = [...heatPumps, ...installationMaterials, ...tools];
-  const packages = buildPackages(orders, products);
-  const invoice = connectInvoice(packages);
-  const restockList = produceRestockingList(products);
-  throwWarnings(orders, products);
+  // Processing orders
+  processAllOrders();
 
-  console.log('Invoice:', invoice);
-  console.log('Restocking List:', restockList);
+  // Logging restocking list
+  console.log('\n--- Restocking list ---');
+  createRestockingList();
 };
 
 // Run the solution
-runSolution();
+main();
