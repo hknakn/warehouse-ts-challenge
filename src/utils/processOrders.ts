@@ -30,13 +30,13 @@ export const processOrder = (order: Order) => {
 
     // Checking if the product exists
     if (!product) {
-      console.error(`Product with "${article}" id not found.`);
+      console.log(`Product with "${article}" id not found.`);
       return;
     }
 
     // Checking if the product is out of stock
     if (product.stock <= 0) {
-      console.error(`"${product.name}" with "${product.id}" id is out of stock`);
+      console.log(`"${product.name}" with "${product.id}" id is out of stock`);
       return;
     }
 
